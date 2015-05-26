@@ -17,9 +17,9 @@ public class Movie {
     private Ratings rating;
     private String synopsis;
     private String posterUrl;
-    private Cast[] casting;
+    private ArrayList<Cast> casting;
 
-    public Movie(String title, int year, String runtime, Ratings rating, String synopsis, String posterUrl, Cast[] casting) {
+    public Movie(String title, int year, String runtime, Ratings rating, String synopsis, String posterUrl, ArrayList<Cast>casting) {
         this.title = title;
         this.year = year;
         this.runtime = runtime;
@@ -77,11 +77,11 @@ public class Movie {
         this.posterUrl = posterUrl;
     }
 
-    public Cast[] getCasting() {
+    public ArrayList<Cast> getCasting() {
         return casting;
     }
 
-    public void setCasting(Cast[] casting) {
+    public void setCasting(ArrayList<Cast> casting) {
         this.casting = casting;
     }
 
@@ -107,12 +107,12 @@ public class Movie {
 
 
                 JSONArray castingArray = movieJSON.getJSONArray("abridged_cast");
-                Cast[] casting = new Cast[]{};
+                ArrayList<Cast> casting = new ArrayList<Cast>();
 
                 for (int j= 0; j < castingArray.length(); j++){
                     JSONObject castJSON = castingArray.getJSONObject(j);
                     Cast cast = new Cast(castJSON.optString("name"));
-                    casting[i] = cast;
+                    casting.add(cast);
                 }
 
                 Movie movie = new Movie(title,year,runtime,rating,synopsis,posterUrl,casting);

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -22,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import lennux.com.mx.movie_android.R;
+import lennux.com.mx.movie_android.adapters.ListMovieAdapter;
 import lennux.com.mx.movie_android.models.Movie;
 
 
@@ -31,6 +33,8 @@ public class ListMoviesFragment extends Fragment {
     private String query = "friends";
 
     private ArrayList<Movie> movies = new ArrayList<Movie>();
+
+    private ListMovieAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,7 +63,18 @@ public class ListMoviesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_movies, container, false);
-        ListView listView = (ListView) view.findViewById(R.id.listMovies);
+        ListView listMovies= (ListView) view.findViewById(R.id.listMovies);
+
+        adapter = new ListMovieAdapter(getActivity(),R.layout.item_list_movies,movies);
+
+        listMovies.setAdapter(adapter);
+
+        listMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.onMovieSelected(movies.get(position));
+            }
+        });
 
         return view;
     }
@@ -125,6 +140,9 @@ public class ListMoviesFragment extends Fragment {
             if (result != null){
                 Log.e("RESPONSE", result);
                 movies = Movie.parseJSON(result);
+                adapter.clear();
+                adapter.addAll(movies);
+                adapter.notifyDataSetChanged();
             }
         }
     }
