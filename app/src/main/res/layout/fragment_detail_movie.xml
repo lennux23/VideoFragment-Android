@@ -1,0 +1,108 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lennux.com.mx.movie_android.fragments.DetailMovieFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_medium"
+            android:id="@+id/txtDetailTitle"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/poster"
+            android:src="@mipmap/ic_movie"
+            android:paddingBottom="@dimen/padding_medium"
+            android:id="@+id/imgPoster"/>/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/runtime"
+            android:textSize="@dimen/font_medium"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_medium"
+            android:id="@+id/txtRuntime"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_blank_fragment"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/casting"
+            android:textSize="@dimen/font_medium"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_medium"
+            android:id="@+id/txtCasting"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/synopsis"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/casting"
+            android:textSize="@dimen/font_medium"
+            android:gravity="center"
+            android:paddingBottom="@dimen/padding_medium"
+            android:id="@+id/txtSynopsis" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/criticScore"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_gravity="center"
+            android:id="@+id/ratingCritic"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/audienceScore"
+            android:textSize="@dimen/font_title"
+            android:gravity="center"/>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:layout_gravity="center"
+            android:id="@+id/ratingAudience"/>
+
+    </LinearLayout>
+
+</ScrollView>

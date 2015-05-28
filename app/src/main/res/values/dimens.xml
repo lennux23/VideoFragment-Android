@@ -9,4 +9,8 @@
     <dimen name="thumbnail">150dp</dimen>
     <dimen name="font_medium">25sp</dimen>
     <dimen name="padding_small">5dp</dimen>
+    <dimen name="progressSize">32dp</dimen>
+    <dimen name="poster">200dp</dimen>
+    <dimen name="padding_medium">15dp</dimen>
+    <dimen name="font_title">15sp</dimen>
 </resources>

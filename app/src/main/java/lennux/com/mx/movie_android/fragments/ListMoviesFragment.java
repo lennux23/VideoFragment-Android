@@ -1,12 +1,19 @@
 package lennux.com.mx.movie_android.fragments;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,7 +37,6 @@ import lennux.com.mx.movie_android.models.Movie;
 public class ListMoviesFragment extends Fragment {
 
     public static final String API_KEY = "35hg37n2zaybbwf7wncj9vgw";
-    private String query = "friends";
 
     private ArrayList<Movie> movies = new ArrayList<Movie>();
 
@@ -40,22 +46,16 @@ public class ListMoviesFragment extends Fragment {
 
     Uri.Builder builder = new  Uri.Builder();
 
+    private MenuItem menuLoading;
+
+
+    private boolean loading= false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        builder.scheme("http")
-                .authority("api.rottentomatoes.com")
-                .appendPath("api")
-                .appendPath("public")
-                .appendPath("v1.0")
-                .appendPath("movies.json")
-                .appendQueryParameter("apikey", API_KEY)
-                .appendQueryParameter("q", query);
-        String url = builder.build().toString();
+        setHasOptionsMenu(true);
 
-        Log.e("URL", url);
-
-        new RottenRequest().execute(url);
     }
 
     @Override
@@ -97,6 +97,62 @@ public class ListMoviesFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
+        inflater.inflate(R.menu.menu_list_movies,menu);
+
+        this.menuLoading = menu.findItem(R.id.menuLoading);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menuSearch).getActionView();
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(getActivity().getComponentName());
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.equals("") && !loading) {
+                    builder.scheme("http")
+                            .authority("api.rottentomatoes.com")
+                            .appendPath("api")
+                            .appendPath("public")
+                            .appendPath("v1.0")
+                            .appendPath("movies.json")
+                            .appendQueryParameter("apikey", API_KEY)
+                            .appendQueryParameter("q", query);
+
+                    String url = builder.build().toString();
+
+                    Log.e("URL", url);
+                    Log.e("Pase al onmenu", "asas");
+                    new RottenRequest().execute(url);
+                   // builder.
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+            /*    builder.scheme("http")
+                        .authority("api.rottentomatoes.com")
+                        .appendPath("api")
+                        .appendPath("public")
+                        .appendPath("v1.0")
+                        .appendPath("movies.json")
+                        .appendQueryParameter("apikey", API_KEY)
+                        .appendQueryParameter("q", newText);
+
+                String url = builder.build().toString();
+
+                Log.e("URL", url);
+
+                new RottenRequest().execute(url);
+                builder.clearQuery();*/
+                return false;
+            }
+        });
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onMovieSelected(Movie movie);
@@ -132,6 +188,7 @@ public class ListMoviesFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            setMenuLoading(true);
         }
 
         @Override
@@ -143,8 +200,22 @@ public class ListMoviesFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(movies);
                 adapter.notifyDataSetChanged();
+                setMenuLoading(false);
             }
         }
+
+
+    }
+
+    public void setMenuLoading(boolean load){
+        this.loading = load;
+        if (load){
+            menuLoading.setVisible(true);
+            menuLoading.setActionView(R.layout.menu_loading);
+        } else {
+            menuLoading.setVisible(false);
+        }
+
     }
 
 }

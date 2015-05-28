@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import lennux.com.mx.movie_android.fragments.DetailMovieFragment;
 import lennux.com.mx.movie_android.fragments.ListMoviesFragment;
 import lennux.com.mx.movie_android.fragments.NavigationDrawerFragment;
 import lennux.com.mx.movie_android.R;
@@ -32,11 +33,13 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    private FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentManager = getSupportFragmentManager();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -109,7 +112,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onMovieSelected(Movie movie) {
-
+        fragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.container, DetailMovieFragment.newInstance(movie))
+                .commit();
     }
 
     /**

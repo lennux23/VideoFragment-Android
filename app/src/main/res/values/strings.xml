@@ -14,4 +14,12 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Buscar</string>
+    <string name="loading">cargando</string>
+    <string name="runtime">Duración</string>
+    <string name="casting">Actores</string>
+    <string name="synopsis">Sinopsis</string>
+    <string name="criticScore">Critica de usuario</string>
+    <string name="audienceScore">Score</string>
+
 </resources>
